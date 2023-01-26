@@ -1,0 +1,23 @@
+@page "/new"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using DesafioBlazor.Models
+
+<PageTitle>Novo To do</PageTitle>
+
+<h1>Criar um To do</h1>
+
+<EditForm Model="@todo" OnSubmit="@HandleSubmit">
+    <InputText id="name" @bind-Value="todo.Title" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private Todo todo = new();
+
+    private void HandleSubmit()
+    {
+        
+    }
+}

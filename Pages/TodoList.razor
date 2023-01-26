@@ -1,0 +1,29 @@
+﻿@page "/todo"
+
+@using DesafioBlazor.Services
+
+@inject ITodoService todoService
+
+<PageTitle>To do (s)</PageTitle>
+
+<h1>To do</h1>
+
+@if (todoService.GetTodos().Count() == 0) {
+    <div class="alert alert-danger mt-4">
+        Sem to do cadastrados
+    </div>
+} else {
+    <div class="grid-container">
+        <div>Coluna</div>
+        <div>Coluna</div>
+        <div>Coluna</div>
+        <div>Coluna</div>
+        <div>Coluna</div>
+        <div>Coluna</div>
+        <div>Coluna</div>
+    </div>
+}
+
+@code {
+    private int currentCount = 0;
+}
