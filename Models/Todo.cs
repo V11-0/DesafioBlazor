@@ -5,7 +5,7 @@ namespace DesafioBlazor.Models;
 public class Todo {
 
     [Required]
-    [StringLength(30, ErrorMessage = "Identifier too long (16 character limit).")]
+    [StringLength(30, ErrorMessage = "Identifier too long (30 character limit).")]
     public string Title { get; set; } = null!;
 
     [Required]
