@@ -2,22 +2,80 @@
 
 @using Microsoft.AspNetCore.Components.Forms
 @using DesafioBlazor.Models
+@using DesafioBlazor.Services
+@using BlazorColorPicker
+
+@inject ITodoService todoService
 
 <PageTitle>Novo To do</PageTitle>
 
 <h1>Criar um To do</h1>
 
-<EditForm Model="@todo" OnSubmit="@HandleSubmit">
-    <InputText id="name" @bind-Value="todo.Title" />
+<EditForm Model="@todo" OnValidSubmit="@HandleSubmit" OnInvalidSubmit="@Dismiss">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <p>
+            <label>
+                Título:
+                <InputText id="name" @bind-Value="@todo.Title" />
+            </label>
+        </p>
+    </div>
+    <div>
+        <p>
+            <label>
+                Texto:
+                <InputTextArea id="text" @bind-Value="@todo.Text" />
+            </label>
+        </p>
+    </div>
+
+    <div>
+        <p>
+            <button type="button" class="btn btn-primary" @onclick="@OpenPicker">
+                <div style="background-color:@todo.HexColor" class="buttonColor"></div> Selecionar cor
+            </button>
+
+            <ColorPicker Title="Cor do To do" IsOpened="isPickerOpen" Closed="ClosedEvent" MyColor="@todo.HexColor" />
+        </p>
+    </div>
 
     <button type="submit">Submit</button>
 </EditForm>
 
+@if (showSuccessAlert) {
+    <div class="alert alert-success mt-4">
+        <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+        <strong>To do criado!</strong>
+    </div>
+}
+
 @code {
     private Todo todo = new();
 
+    private bool isPickerOpen = false;
+    private bool showSuccessAlert = false;
+
     private void HandleSubmit()
     {
-        
+        todoService.CreateTodo(todo);
+        showSuccessAlert = true;
+    }
+
+    private void Dismiss() {
+        showSuccessAlert = false;
+    }
+
+    void OpenPicker()
+    {
+        isPickerOpen = true;
+    }
+
+    void ClosedEvent(string value)
+    {
+        todo.HexColor = value;
+        isPickerOpen = false;
     }
 }

@@ -6,7 +6,7 @@
 
 <PageTitle>To do (s)</PageTitle>
 
-<h1>To do</h1>
+<h1>Lista</h1>
 
 @if (todoService.GetTodos().Count() == 0) {
     <div class="alert alert-danger mt-4">
@@ -14,13 +14,13 @@
     </div>
 } else {
     <div class="grid-container">
-        <div>Coluna</div>
-        <div>Coluna</div>
-        <div>Coluna</div>
-        <div>Coluna</div>
-        <div>Coluna</div>
-        <div>Coluna</div>
-        <div>Coluna</div>
+        @foreach (var todo in todoService.GetTodos())
+        {
+            <div class="card-todo" style="background-color: @todo.HexColor">
+                <h1 class="ml-2 mt-1">@todo.Title</h1>
+                <p>@todo.Text</p>
+            </div>
+        }
     </div>
 }
 
